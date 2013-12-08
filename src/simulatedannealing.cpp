@@ -19,7 +19,7 @@ tour* SimulatedAnnealing::cloneTour(tour* original) {
 tour* SimulatedAnnealing::getBetterTour(tour* t, std::clock_t deadline) {
 	
 	tour* best_so_far = cloneTour(t);
-	
+
 	while(std::clock() < deadline) {
 			
 		tour* curr_tour = cloneTour(best_so_far);
@@ -45,8 +45,6 @@ tour* SimulatedAnnealing::getBetterTour(tour* t, std::clock_t deadline) {
 			
 	}
 	
-	//~ cout << best_so_far->cost << endl;
-	//~ cout << "Broke out!" << endl;
 	return best_so_far;
 }
 
@@ -56,7 +54,7 @@ tour* SimulatedAnnealing::randomBadModify(tour* t) {
 	
 	int i1 = rand() % dim;	
 	int i2 = rand() % dim;
-	
+	//~ 
 	//~ if(i2 == 0)
 		//~ i2++;
 	//~ if(i1 == 0)
@@ -64,10 +62,9 @@ tour* SimulatedAnnealing::randomBadModify(tour* t) {
 	if(i1 == i2)
 		i1 = (i2 + 1) % dim ;
 	
-	//~ double cost = 0;
+	
 	//~ if(i1 < i2) { 
 		//~ double cost = getNewCost(t, i1, i2);		
-	
 		//~ swap(t, i1, i2, cost);
 	//~ } else {
 		//~ double cost = getNewCost(t, i2, i1);		

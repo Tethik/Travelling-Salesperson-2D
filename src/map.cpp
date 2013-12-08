@@ -15,6 +15,7 @@ Map::Map (vector<coordinate*>* cities)
 	setDistanceMatrix(cities);
 	cities->clear();		
 	delete cities; // Frigör coordinates etc, vi behöver space för neighbourmaps? :/
+	setAdjacencyThresholds();
 }
 
 Map::~Map()
@@ -64,6 +65,44 @@ void Map::setDistanceMatrix(std::vector<coordinate*>* cities)
 			distance_mat[i][j] = d;
 			distance_mat[j][i] = d;			
 		}
+	}
+}
+
+//~ bool Map::distCompare (int i,int j) { 
+	//~ return (distance_mat[current][i] < distance_mat[current][j]); 
+//~ }
+
+void Map::setAdjacencyThresholds() {
+	// Adjancency lists...
+	
+	int dim = getDimension();
+	//~ int pos = (dim > ADJACENCY_LIST_SIZE) ?  ADJACENCY_LIST_SIZE - 2 : dim - 2;	
+	//~ this->adjacencyThresholds = new double[dim];
+	
+	for(int i = 0; i <  dim; ++i) {	
+		vector<int>* neighbours = new vector<int>;
+		for(int j = 0; j < dim; ++j) {
+			if(i == j) continue;			
+			neighbours->push_back(j);
+		}		
+		
+		sort(neighbours->begin(), neighbours->end(), 
+			[i, this] (int x, int y) -> bool { 
+				return this->getDistance(i,x) < this->getDistance(i,y);
+			}
+		);
+		
+		
+		//~ if(i == 0)
+		//~ {
+			//~ for(int j = 0; j < neighbours->size(); ++j)
+			//~ {				
+				//~ cout << neighbours->at(j) << " " << distance_mat[i][neighbours->at(j)] << endl;
+			//~ }
+		//~ }
+		
+		this->adjacencyLists.push_back( neighbours );	
+		
 	}
 }
 

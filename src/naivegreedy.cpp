@@ -23,24 +23,30 @@ tour* NaiveGreedy::naiveTspPath(Map* map, int startnode) {
 	used[startnode] = true;
 	path[0] = startnode;	
 	//~ double totalcost = 0.0;
-	
+	double cost = 0;
 	for(int i = 1; i < N; i++)
 	{
 		int best = -1;
 		double cost = 2147483647;
 		
-		for(int j = 0; j < N; j++)
+		for(int n = 0; n < map->adjacencyLists[path[i-1]]->size(); n++)
 		{
-			if(used[j] || path[i-1] == j)
+			int j = map->adjacencyLists[path[i-1]]->at(n);
+			
+			if(used[j])
 				continue;
 			
-			double d = map->getDistance(path[i-1], j);
 			
-			if(best == -1 || d < cost)
-			{
-				best = j;
-				cost = d;
-			}
+			//~ double d = ;
+			//~ 
+			//~ if(best == -1 || d < cost)
+			//~ {
+			//~ cout << path[i-1] << " -> " <<  j << endl;
+			best = j;
+			cost += map->getDistance(path[i-1], j);
+			//~ cost = d;
+			break;
+			//~ }
 		}
 		#ifdef DEBUG_TRACE
 			cout << "Best " << best << endl;
@@ -50,7 +56,11 @@ tour* NaiveGreedy::naiveTspPath(Map* map, int startnode) {
 		used[best] = true;
 	}
 	
+	cout << endl;
+	cout << endl;
+	
 	tour* tmp = new tour(path);
-	tmp->cost = map->getTourDistance(tmp);
+	tmp->cost = cost;
+	
 	return tmp;
 }

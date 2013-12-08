@@ -53,39 +53,35 @@ int main()
 	//~ local_search->findBest = true;
 	tour* best_tour = new tour;
 	best_tour->cost = -1;
-	
-	//~ tour* curr_tour = approxTSP(map);	
-	//~ best_tour = local_search->getBetterTour(best_tour, deadline);
 	twoopt->findBest = false;
 	
 	int i = 0;
-	int improvements = 0;
 	
-	for(; std::clock() < deadline / 3; i++)
-	{
+	//~ for(; std::clock() < deadline; i++)
+	//~ {
 		// Startgissning
 		tour* curr_tour = greedy->naiveTspPath(map, rand() % map->getDimension());
 		
-		double greedy_cost = curr_tour->cost;		
+		//~ double greedy_cost = curr_tour->cost;		
 			
-		curr_tour = twoopt->getBetterTour(curr_tour, deadline);
+		//~ curr_tour = twoopt->getBetterTour(curr_tour, deadline);
 		
 		if(best_tour->cost < 0 || curr_tour->cost < best_tour->cost) {			
 			tour* tmp = best_tour;
 			best_tour = curr_tour;
 			curr_tour = tmp;			
-			improvements++;
 		}				
 		delete curr_tour;
-	}
+	//~ }
 	
 	//~ tour* curr_tour = greedy->naiveTspPath(map, rand() % map->getDimension());
+	
+	//~ twoopt->findBest = true;
+	//~ best_tour = twoopt->getBetterTour(best_tour, deadline);
 	//~ 
-	//~ best_tour = twoopt->getBetterTour(curr_tour, deadline);
-	
-	// Förbättring
-	best_tour = local_search->getBetterTour(best_tour, deadline);
-	
+	//~ // Förbättring
+	//~ best_tour = local_search->getBetterTour(best_tour, deadline);
+	//~ 
 	//~ cout << "Improvements: " << improvements << endl;
 	
 	// Output.
