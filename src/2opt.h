@@ -14,7 +14,7 @@ class TwoOpt : public LocalSearch
 	protected: 
 		double* adjacencyThresholds;
 		std::vector<std::vector<int>*> adjacencyLists;
-		const static bool findBest = false;
+		
 		
 		void swap(tour* t, int from, int to, double cost);
 		// what is the cost if we were to swap?
@@ -23,6 +23,7 @@ class TwoOpt : public LocalSearch
 		bool findNewTour(tour* t, std::clock_t start);
 		void setAdjacencyThresholds();
 	public:
+		bool findBest;
 		TwoOpt(Map* map);
 		virtual tour* getBetterTour(tour*, std::clock_t);
 

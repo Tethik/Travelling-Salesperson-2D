@@ -16,6 +16,7 @@
 #include "naivegreedy.h"
 #include "2opt.h"
 #include "simulatedannealing.h"
+#include "randomtour.h"
 
 using namespace std;
 
@@ -43,29 +44,31 @@ int main()
 	}
 
 	map = new Map(cities);
-	//~ LocalSearch* local_search = new TabuSearch(map);
-	LocalSearch* local_search = new TwoOpt(map);
+	LocalSearch* local_search = new TabuSearch(map);
+	TwoOpt* twoopt = new TwoOpt(map);
 	//~ LocalSearch* local_search = new SimulatedAnnealing(map);
 	NaiveGreedy* greedy = new NaiveGreedy;
+	//~ RandomTour* randomTour = new RandomTour;
 	
+	//~ local_search->findBest = true;
 	tour* best_tour = new tour;
 	best_tour->cost = -1;
 	
+	//~ tour* curr_tour = approxTSP(map);	
+	//~ best_tour = local_search->getBetterTour(best_tour, deadline);
+	twoopt->findBest = false;
+	
 	int i = 0;
 	int improvements = 0;
-	//~ for(; std::clock() < deadline; i++)
-	//~ {
-		//~ i = i % map->getDimension();
-		
+	for(; std::clock() < deadline / 1.5; i++)
+	{
 		// Startgissning
 		tour* curr_tour = greedy->naiveTspPath(map, rand() % map->getDimension());
-		//~ tour* curr_tour = approxTSP(map);
+		//~ tour* curr_tour = randomTour->randomTspPath(map);
 		
-		double greedy_cost = curr_tour->cost;
-		
-		
-		// Förbättring
-		curr_tour = local_search->getBetterTour(curr_tour, deadline);
+		double greedy_cost = curr_tour->cost;		
+			
+		curr_tour = twoopt->getBetterTour(curr_tour, deadline);
 		
 		//~ cout << i << " "  << greedy_cost << " -> " << curr_tour->cost << endl;
 		
@@ -74,10 +77,12 @@ int main()
 			best_tour = curr_tour;
 			curr_tour = tmp;			
 			improvements++;
-		}		
-		
-		//~ delete curr_tour;
-	//~ }
+		}				
+		delete curr_tour;
+	}
+	
+	// Förbättring
+	best_tour = local_search->getBetterTour(best_tour, deadline);
 	
 	//~ cout << "Improvements: " << improvements << endl;
 	
