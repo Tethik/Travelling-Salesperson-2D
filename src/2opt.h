@@ -22,7 +22,7 @@ class TwoOpt : public LocalSearch
 		bool findNewTour(tour* t, std::clock_t start);
 		
 	public:
-		int adjacency = ADJACENCY_LIST_SIZE;
+		int adjacency;
 		bool findBest;
 		TwoOpt(Map* map);
 		virtual tour* getBetterTour(tour*, std::clock_t);

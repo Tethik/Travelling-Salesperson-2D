@@ -23,7 +23,6 @@ Map::~Map()
 	for(int i = 0; i < dim; i++)
 	{
 		delete distance_mat[i];
-		//~ delete neighbourMap[i];
 	}
 	delete distance_mat;	
 }
@@ -79,7 +78,7 @@ void Map::setAdjacencyThresholds() {
 	//~ int pos = (dim > ADJACENCY_LIST_SIZE) ?  ADJACENCY_LIST_SIZE - 2 : dim - 2;	
 	//~ this->adjacencyThresholds = new double[dim];
 	
-	for(int i = 0; i <  dim; ++i) {	
+	for(int i = 0; i < dim; ++i) {	
 		vector<int>* neighbours = new vector<int>;
 		for(int j = 0; j < dim; ++j) {
 			if(i == j) continue;			

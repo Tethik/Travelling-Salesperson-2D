@@ -23,7 +23,7 @@ tour* NaiveGreedy::naiveTspPath(Map* map, int startnode) {
 	used[startnode] = true;
 	path[0] = startnode;	
 	//~ double totalcost = 0.0;
-	double cost = 0;
+	double sum = 0;
 	for(int i = 1; i < N; i++)
 	{
 		int best = -1;
@@ -54,13 +54,11 @@ tour* NaiveGreedy::naiveTspPath(Map* map, int startnode) {
 		#endif
 		path[i] = best;
 		used[best] = true;
+		sum += cost;
 	}
 	
-	cout << endl;
-	cout << endl;
-	
 	tour* tmp = new tour(path);
-	tmp->cost = cost;
+	tmp->cost = sum;
 	
 	return tmp;
 }

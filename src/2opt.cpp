@@ -10,7 +10,9 @@ using namespace std;
 
 TwoOpt::TwoOpt(Map* map) {
 	this->map = map;	
-	
+	this->adjacency = ADJACENCY_LIST_SIZE;
+	if(this->adjacency > map->getDimension() - 1)
+		this->adjacency = map->getDimension() - 1;
 	//~ #ifdef USE_ADJACENCY	
 	//~ setAdjacencyThresholds();
 	//~ #endif
@@ -68,7 +70,7 @@ bool TwoOpt::findNewTour(tour* t, std::clock_t deadline) {
 		//~ #endif
 		
 		vector<int>* adjacent = map->adjacencyLists[t->path[i]];
-		for(unsigned int c = 0; c < adjacent->size(); ++c)
+		for(unsigned int c = 0; c < adjacency; ++c)
 		{		
 			int city = adjacent->at(c);
 			int j = t->reverse[city];
@@ -122,7 +124,7 @@ bool TwoOpt::findBestNewTour(tour* t, std::clock_t deadline) {
 				//~ continue;
 			//~ #endif
 		vector<int>* adjacent = map->adjacencyLists[t->path[i]];
-		for(unsigned int c = 0; c < adjacent->size(); ++c)
+		for(unsigned int c = 0; c < adjacency; ++c)
 		{		
 			int city = adjacent->at(c);
 			int j = t->reverse[city];
