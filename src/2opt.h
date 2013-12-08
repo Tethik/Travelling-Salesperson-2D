@@ -7,14 +7,13 @@
 #include <vector>
 
 #define USE_ADJACENCY
-#define ADJACENCY_LIST_SIZE 128
+#define ADJACENCY_LIST_SIZE 64
 
 class TwoOpt : public LocalSearch
 {	
 	protected: 
-		double* adjacencyThresholds;
+		//~ double* adjacencyThresholds;
 		std::vector<std::vector<int>*> adjacencyLists;
-		
 		
 		void swap(tour* t, int from, int to, double cost);
 		// what is the cost if we were to swap?

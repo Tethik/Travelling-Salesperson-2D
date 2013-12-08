@@ -14,10 +14,12 @@ class SimulatedAnnealing  : public TwoOpt
 		tour* findLeastBadTour(tour*, std::clock_t);
 		tour* randomBadModify(tour*);
 		tour* cloneTour(tour*);
+		inline double getNewBadCost(tour* t, int i1, int i2);
 	
 	public:
 		SimulatedAnnealing(Map* map);
 		virtual tour* getBetterTour(tour*, std::clock_t);
+		
 	
 };
 

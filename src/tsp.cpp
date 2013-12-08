@@ -44,9 +44,9 @@ int main()
 	}
 
 	map = new Map(cities);
-	LocalSearch* local_search = new TabuSearch(map);
+	//~ LocalSearch* local_search = new TabuSearch(map);
 	TwoOpt* twoopt = new TwoOpt(map);
-	//~ LocalSearch* local_search = new SimulatedAnnealing(map);
+	LocalSearch* local_search = new SimulatedAnnealing(map);
 	NaiveGreedy* greedy = new NaiveGreedy;
 	//~ RandomTour* randomTour = new RandomTour;
 	
@@ -60,17 +60,15 @@ int main()
 	
 	int i = 0;
 	int improvements = 0;
-	for(; std::clock() < deadline / 1.5; i++)
+	
+	for(; std::clock() < deadline / 3; i++)
 	{
 		// Startgissning
 		tour* curr_tour = greedy->naiveTspPath(map, rand() % map->getDimension());
-		//~ tour* curr_tour = randomTour->randomTspPath(map);
 		
 		double greedy_cost = curr_tour->cost;		
 			
 		curr_tour = twoopt->getBetterTour(curr_tour, deadline);
-		
-		//~ cout << i << " "  << greedy_cost << " -> " << curr_tour->cost << endl;
 		
 		if(best_tour->cost < 0 || curr_tour->cost < best_tour->cost) {			
 			tour* tmp = best_tour;
@@ -80,6 +78,10 @@ int main()
 		}				
 		delete curr_tour;
 	}
+	
+	//~ tour* curr_tour = greedy->naiveTspPath(map, rand() % map->getDimension());
+	//~ 
+	//~ best_tour = twoopt->getBetterTour(curr_tour, deadline);
 	
 	// Förbättring
 	best_tour = local_search->getBetterTour(best_tour, deadline);
